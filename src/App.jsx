@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, AlertCircle } from 'lucide-react';
+import { ArrowRight, AlertCircle, Volume2, VolumeX } from 'lucide-react';
 import logo from './assets/logo.png';
 import sphere from './assets/sphere.png';
 
@@ -41,6 +41,15 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isFocused, setIsFocused] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef(null);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  };
 
   // Calculate countdown to August 15, 2026
   useEffect(() => {
@@ -229,6 +238,33 @@ export default function App() {
           <AnimatedUnit value={timeLeft.seconds} label="secs" />
         </motion.div>
 
+        {/* Video Mute/Unmute Control (Above Video) */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={baseFade}
+          transition={{ delay: 0.32 }}
+          className="w-full max-w-sm flex justify-end mb-2.5"
+        >
+          <button
+            type="button"
+            onClick={toggleMute}
+            className="flex items-center gap-1.5 text-[10px] font-mono tracking-wider text-gray-500 hover:text-[#F3A92C] transition-colors select-none uppercase"
+          >
+            {isMuted ? (
+              <>
+                <VolumeX className="w-3.5 h-3.5" />
+                <span>Unmute Video</span>
+              </>
+            ) : (
+              <>
+                <Volume2 className="w-3.5 h-3.5 text-[#F3A92C]" />
+                <span>Mute Video</span>
+              </>
+            )}
+          </button>
+        </motion.div>
+
         {/* Video Preview Container */}
         <motion.div 
           initial="hidden" 
@@ -238,11 +274,12 @@ export default function App() {
           className="w-full max-w-sm aspect-video rounded-xl border border-white/5 bg-white/[0.01] overflow-hidden mb-12 shadow-2xl relative"
         >
           <video 
+            ref={videoRef}
             src="/promo.mp4" 
             controls 
             autoPlay 
             loop 
-            muted 
+            muted={isMuted}
             playsInline
             className="w-full h-full object-cover"
           />
@@ -360,16 +397,16 @@ export default function App() {
         
         {/* Minimalist social links */}
         <div className="flex items-center gap-6 font-mono text-[10px] tracking-[0.15em] text-gray-600 select-none">
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F3A92C] transition-colors">
+          <a href="https://x.com/odgtraders" target="_blank" rel="noopener noreferrer" className="hover:text-[#F3A92C] transition-colors">
             TWITTER
           </a>
           <span className="text-gray-800">/</span>
-          <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" className="hover:text-[#F3A92C] transition-colors">
+          <a href="https://t.me/odogwusofforrex" target="_blank" rel="noopener noreferrer" className="hover:text-[#F3A92C] transition-colors">
             TELEGRAM
           </a>
           <span className="text-gray-800">/</span>
-          <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" className="hover:text-[#F3A92C] transition-colors">
-            DISCORD
+          <a href="https://chat.whatsapp.com/HKkrD65TCWWHXFn5haUSjC?mode=gi_t" target="_blank" rel="noopener noreferrer" className="hover:text-[#F3A92C] transition-colors">
+            WHATSAPP
           </a>
         </div>
       </footer>
