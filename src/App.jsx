@@ -240,7 +240,9 @@ export default function App() {
           <video 
             src="/promo.mp4" 
             controls 
+            autoPlay 
             loop 
+            muted 
             playsInline
             className="w-full h-full object-cover"
           />
