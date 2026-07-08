@@ -171,7 +171,7 @@ export default function App() {
           animate="visible" 
           variants={baseFade}
           src={logo} 
-          alt="ODG Trades" 
+          alt="ODG Traders" 
           className="h-8 md:h-9 w-auto object-contain opacity-85 hover:opacity-100 transition-opacity" 
         />
       </header>
@@ -186,7 +186,7 @@ export default function App() {
           variants={baseFade}
           className="text-[10px] md:text-xs font-mono font-medium tracking-[0.3em] text-[#F3A92C] uppercase mb-6"
         >
-          ODG Trades · Premium Forex Hub
+          ODG Traders · Your Path to Professional Trading
         </motion.span>
 
         {/* Heading */}
@@ -336,7 +336,7 @@ export default function App() {
       {/* Footer */}
       <footer className="relative z-10 w-full max-w-4xl border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-[10px] text-gray-600 font-mono tracking-wider text-center md:text-left select-none">
-          &copy; {new Date().getFullYear()} ODG TRADES. ALL RIGHTS RESERVED.
+          &copy; {new Date().getFullYear()} ODG TRADERS. ALL RIGHTS RESERVED.
         </p>
         
         {/* Minimalist social links */}
