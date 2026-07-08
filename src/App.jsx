@@ -229,6 +229,23 @@ export default function App() {
           <AnimatedUnit value={timeLeft.seconds} label="secs" />
         </motion.div>
 
+        {/* Video Preview Container */}
+        <motion.div 
+          initial="hidden" 
+          animate="visible" 
+          variants={baseFade}
+          transition={{ delay: 0.35 }}
+          className="w-full max-w-sm aspect-video rounded-xl border border-white/5 bg-white/[0.01] overflow-hidden mb-12 shadow-2xl relative"
+        >
+          <video 
+            src="/promo.mp4" 
+            controls 
+            loop 
+            playsInline
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+
         {/* Underlined Waitlist Form with Animated Glow underline */}
         <motion.div 
           initial="hidden" 
