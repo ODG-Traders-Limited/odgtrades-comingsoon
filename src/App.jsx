@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, AlertCircle, Volume2, VolumeX } from 'lucide-react';
 import logo from './assets/logo.png';
 import sphere from './assets/sphere.png';
+import PrivacyPolicy from './PrivacyPolicy';
+import TermsAndConditions from './TermsAndConditions';
 
 // Elegant entry transitions
 const baseFade = {
@@ -36,6 +38,7 @@ const AnimatedUnit = ({ value, label }) => {
 };
 
 export default function App() {
+  const [view, setView] = useState('landing'); // 'landing', 'privacy', 'terms'
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
   const [errorMessage, setErrorMessage] = useState('');
@@ -49,6 +52,38 @@ export default function App() {
       videoRef.current.muted = !videoRef.current.muted;
       setIsMuted(videoRef.current.muted);
     }
+  };
+
+  // Scroll to top on view change
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [view]);
+
+  // Hash-based router listener
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash === '#privacy') {
+        setView('privacy');
+      } else if (hash === '#terms') {
+        setView('terms');
+      } else if (hash === '' || hash === '#home') {
+        setView('landing');
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    // Initial trigger
+    handleHashChange();
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const navigateTo = (newView) => {
+    if (newView === 'landing') {
+      window.location.hash = 'home';
+    } else {
+      window.location.hash = newView;
+    }
+    setView(newView);
   };
 
   // Calculate countdown to August 15, 2026
@@ -104,6 +139,14 @@ export default function App() {
       localStorage.setItem('odg_waitlist', JSON.stringify(existingWaitlist));
     }, 1200);
   };
+
+  if (view === 'privacy') {
+    return <PrivacyPolicy onBack={() => navigateTo('landing')} />;
+  }
+
+  if (view === 'terms') {
+    return <TermsAndConditions onBack={() => navigateTo('landing')} />;
+  }
 
   return (
     <div className="relative min-h-screen bg-[#050505] text-white flex flex-col justify-between items-center px-6 py-12 md:py-16 selection:bg-[#F3A92C]/10 selection:text-[#F3A92C] overflow-hidden">
@@ -391,9 +434,20 @@ export default function App() {
 
       {/* Footer */}
       <footer className="relative z-10 w-full max-w-4xl border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-[10px] text-gray-600 font-mono tracking-wider text-center md:text-left select-none">
-          &copy; {new Date().getFullYear()} ODG TRADERS. ALL RIGHTS RESERVED.
-        </p>
+        <div className="flex flex-col items-center md:items-start gap-2">
+          <p className="text-[10px] text-gray-600 font-mono tracking-wider text-center md:text-left select-none">
+            &copy; {new Date().getFullYear()} ODG TRADERS. ALL RIGHTS RESERVED.
+          </p>
+          <div className="flex items-center gap-3 font-mono text-[9px] tracking-wider text-gray-500">
+            <button onClick={() => navigateTo('privacy')} className="hover:text-[#F3A92C] transition-colors uppercase">
+              Privacy Policy
+            </button>
+            <span className="text-gray-850">•</span>
+            <button onClick={() => navigateTo('terms')} className="hover:text-[#F3A92C] transition-colors uppercase">
+              Terms & Conditions
+            </button>
+          </div>
+        </div>
         
         {/* Minimalist social links */}
         <div className="flex items-center gap-6 font-mono text-[10px] tracking-[0.15em] text-gray-600 select-none">
