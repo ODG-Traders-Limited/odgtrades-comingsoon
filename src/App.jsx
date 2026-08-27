@@ -86,9 +86,9 @@ export default function App() {
     setView(newView);
   };
 
-  // Calculate countdown to August 15, 2026
+  // Calculate countdown to September 1, 2026
   useEffect(() => {
-    const launchDate = new Date("August 15, 2026 00:00:00").getTime();
+    const launchDate = new Date("September 1, 2026 00:00:00").getTime();
 
     const calculateTime = () => {
       const now = new Date().getTime();
@@ -229,206 +229,212 @@ export default function App() {
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 w-full max-w-lg flex flex-col items-center justify-center my-auto py-12 text-center">
+      <main className="relative z-10 w-full max-w-lg lg:max-w-5xl xl:max-w-6xl flex flex-col lg:grid lg:grid-cols-12 lg:gap-16 items-center lg:items-start justify-center my-auto py-12 text-center lg:text-left">
         
-        {/* Intro Pill Tag */}
-        <motion.span 
-          initial="hidden" 
-          animate="visible" 
-          variants={baseFade}
-          className="text-[10px] md:text-xs font-mono font-medium tracking-[0.3em] text-[#F3A92C] uppercase mb-6"
-        >
-          ODG Traders · Your Path to Professional Trading
-        </motion.span>
-
-        {/* Heading */}
-        <motion.h1 
-          initial="hidden" 
-          animate="visible" 
-          variants={baseFade}
-          transition={{ delay: 0.1 }}
-          className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white mb-6 leading-[1.2]"
-        >
-          The new standard in<br />
-          <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">Forex trading.</span>
-        </motion.h1>
-
-        {/* Subtext */}
-        <motion.p 
-          initial="hidden" 
-          animate="visible" 
-          variants={baseFade}
-          transition={{ delay: 0.2 }}
-          className="text-gray-500 text-sm md:text-base max-w-sm mx-auto mb-10 leading-relaxed font-light"
-        >
-          Elite mentorship, institutional signals, and a network of dedicated funded traders. We are gearing up for launch.
-        </motion.p>
-
-        {/* Refined Sliding Digit Countdown */}
-        <motion.div 
-          initial="hidden" 
-          animate="visible" 
-          variants={baseFade}
-          transition={{ delay: 0.3 }}
-          className="flex justify-center items-center gap-6 md:gap-8 text-gray-500 tracking-wider mb-12 py-3.5 px-8 border-y border-white/5 bg-[#050505]/40 backdrop-blur-sm"
-        >
-          <AnimatedUnit value={timeLeft.days} label="days" />
-          <span className="text-gray-800 select-none self-start mt-1">•</span>
-          <AnimatedUnit value={timeLeft.hours} label="hours" />
-          <span className="text-gray-800 select-none self-start mt-1">•</span>
-          <AnimatedUnit value={timeLeft.minutes} label="mins" />
-          <span className="text-gray-800 select-none self-start mt-1">•</span>
-          <AnimatedUnit value={timeLeft.seconds} label="secs" />
-        </motion.div>
-
-        {/* Video Mute/Unmute Control (Above Video) */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={baseFade}
-          transition={{ delay: 0.32 }}
-          className="w-full max-w-sm flex justify-end mb-2.5"
-        >
-          <button
-            type="button"
-            onClick={toggleMute}
-            className="flex items-center gap-1.5 text-[10px] font-mono tracking-wider text-gray-500 hover:text-[#F3A92C] transition-colors select-none uppercase"
+        {/* Left Column: Brand Headings, Waitlist Form */}
+        <div className="lg:col-span-7 flex flex-col items-center lg:items-start justify-center w-full">
+          {/* Intro Pill Tag */}
+          <motion.span 
+            initial="hidden" 
+            animate="visible" 
+            variants={baseFade}
+            className="text-[10px] md:text-xs font-mono font-medium tracking-[0.3em] text-[#F3A92C] uppercase mb-6"
           >
-            {isMuted ? (
-              <>
-                <VolumeX className="w-3.5 h-3.5" />
-                <span>Unmute Video</span>
-              </>
-            ) : (
-              <>
-                <Volume2 className="w-3.5 h-3.5 text-[#F3A92C]" />
-                <span>Mute Video</span>
-              </>
-            )}
-          </button>
-        </motion.div>
+            ODG Traders · Your Path to Professional Trading
+          </motion.span>
 
-        {/* Video Preview Container */}
-        <motion.div 
-          initial="hidden" 
-          animate="visible" 
-          variants={baseFade}
-          transition={{ delay: 0.35 }}
-          className="w-full max-w-sm aspect-video rounded-xl border border-white/5 bg-white/[0.01] overflow-hidden mb-12 shadow-2xl relative"
-        >
-          <video 
-            ref={videoRef}
-            src="/promo.mp4" 
-            controls 
-            autoPlay 
-            loop 
-            muted={isMuted}
-            playsInline
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+          {/* Heading */}
+          <motion.h1 
+            initial="hidden" 
+            animate="visible" 
+            variants={baseFade}
+            transition={{ delay: 0.1 }}
+            className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white mb-6 leading-[1.2]"
+          >
+            The new standard in<br />
+            <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">Forex trading.</span>
+          </motion.h1>
 
-        {/* Underlined Waitlist Form with Animated Glow underline */}
-        <motion.div 
-          initial="hidden" 
-          animate="visible" 
-          variants={baseFade}
-          transition={{ delay: 0.4 }}
-          className="w-full max-w-sm mb-12"
-        >
-          <AnimatePresence mode="wait">
-            {status !== 'success' ? (
-              <motion.form 
-                key="form"
-                onSubmit={handleSubscribe}
-                className="relative flex items-center justify-between border-b border-white/10 py-2.5 px-0.5"
-              >
-                <input 
-                  id="waitlist-email"
-                  type="email"
-                  placeholder="Join the waitlist"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (status === 'error') setStatus('idle');
-                  }}
-                  onFocus={() => setIsFocused(true)}
-                  onBlur={() => setIsFocused(false)}
-                  disabled={status === 'loading'}
-                  className="bg-transparent text-white placeholder-gray-600 text-sm focus:outline-none w-full pr-4 font-light tracking-wide"
-                  required
-                />
-                <button 
-                  id="join-button"
-                  type="submit"
-                  disabled={status === 'loading'}
-                  className="text-white hover:text-[#F3A92C] font-semibold text-xs transition-colors uppercase tracking-[0.15em] whitespace-nowrap shrink-0 flex items-center gap-1.5 group"
+          {/* Subtext */}
+          <motion.p 
+            initial="hidden" 
+            animate="visible" 
+            variants={baseFade}
+            transition={{ delay: 0.2 }}
+            className="text-gray-500 text-sm md:text-base max-w-sm mx-auto lg:mx-0 mb-10 leading-relaxed font-light"
+          >
+            Elite mentorship, institutional signals, and a network of dedicated funded traders. We are gearing up for launch.
+          </motion.p>
+
+          {/* Underlined Waitlist Form with Animated Glow underline */}
+          <motion.div 
+            initial="hidden" 
+            animate="visible" 
+            variants={baseFade}
+            transition={{ delay: 0.4 }}
+            className="w-full max-w-sm mb-12"
+          >
+            <AnimatePresence mode="wait">
+              {status !== 'success' ? (
+                <motion.form 
+                  key="form"
+                  onSubmit={handleSubscribe}
+                  className="relative flex items-center justify-between border-b border-white/10 py-2.5 px-0.5"
                 >
-                  {status === 'loading' ? (
-                    <span className="w-3.5 h-3.5 border border-white border-t-transparent rounded-full animate-spin"></span>
-                  ) : (
-                    <>
-                      <span>Submit</span>
-                      <motion.span
-                        animate={isFocused ? { x: [0, 3, 0] } : {}}
-                        transition={{ repeat: isFocused ? Infinity : 0, duration: 1.2, ease: "easeInOut" }}
-                        className="group-hover:translate-x-1 transition-transform"
-                      >
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </motion.span>
-                    </>
-                  )}
-                </button>
+                  <input 
+                    id="waitlist-email"
+                    type="email"
+                    placeholder="Join the waitlist"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (status === 'error') setStatus('idle');
+                    }}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    disabled={status === 'loading'}
+                    className="bg-transparent text-white placeholder-gray-600 text-sm focus:outline-none w-full pr-4 font-light tracking-wide lg:text-left"
+                    required
+                  />
+                  <button 
+                    id="join-button"
+                    type="submit"
+                    disabled={status === 'loading'}
+                    className="text-white hover:text-[#F3A92C] font-semibold text-xs transition-colors uppercase tracking-[0.15em] whitespace-nowrap shrink-0 flex items-center gap-1.5 group"
+                  >
+                    {status === 'loading' ? (
+                      <span className="w-3.5 h-3.5 border border-white border-t-transparent rounded-full animate-spin"></span>
+                    ) : (
+                      <>
+                        <span>Submit</span>
+                        <motion.span
+                          animate={isFocused ? { x: [0, 3, 0] } : {}}
+                          transition={{ repeat: isFocused ? Infinity : 0, duration: 1.2, ease: "easeInOut" }}
+                          className="group-hover:translate-x-1 transition-transform"
+                        >
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </motion.span>
+                      </>
+                    )}
+                  </button>
 
-                {/* Animated Gold Focus Line */}
+                  {/* Animated Gold Focus Line */}
+                  <motion.div 
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: isFocused ? 1 : 0 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#F3A92C] to-transparent origin-center shadow-[0_1px_8px_rgba(243,169,44,0.3)]"
+                  />
+                </motion.form>
+              ) : (
                 <motion.div 
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: isFocused ? 1 : 0 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#F3A92C] to-transparent origin-center shadow-[0_1px_8px_rgba(243,169,44,0.3)]"
-                />
-              </motion.form>
-            ) : (
+                  key="success"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-center lg:text-left py-2"
+                >
+                  <p className="text-sm font-semibold text-[#F3A92C] tracking-wide">You have been subscribed.</p>
+                  <p className="text-xs text-gray-500 mt-1">We'll alert you as soon as we launch.</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Validation Error */}
+            {status === 'error' && (
               <motion.div 
-                key="success"
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="text-center py-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex items-center gap-2 text-red-400 text-xs mt-3 justify-center lg:justify-start"
               >
-                <p className="text-sm font-semibold text-[#F3A92C] tracking-wide">You have been subscribed.</p>
-                <p className="text-xs text-gray-500 mt-1">We'll alert you as soon as we launch.</p>
+                <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                <span>{errorMessage}</span>
               </motion.div>
             )}
-          </AnimatePresence>
+          </motion.div>
 
-          {/* Validation Error */}
-          {status === 'error' && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex items-center gap-2 text-red-400 text-xs mt-3 justify-center"
+          {/* Minimalist row of tags */}
+          <motion.div 
+            initial="hidden" 
+            animate="visible" 
+            variants={baseFade}
+            transition={{ delay: 0.5 }}
+            className="flex justify-center lg:justify-start items-center gap-4 text-[10px] md:text-xs uppercase tracking-[0.2em] text-gray-600 font-light font-sans select-none"
+          >
+            <span>Signals</span>
+            <span className="text-gray-800">•</span>
+            <span>Mentorship</span>
+            <span className="text-gray-800">•</span>
+            <span>Community</span>
+          </motion.div>
+        </div>
+
+        {/* Right Column: Countdown and Video Player */}
+        <div className="lg:col-span-5 flex flex-col items-center justify-center w-full mt-12 lg:mt-0">
+          {/* Refined Sliding Digit Countdown Card */}
+          <motion.div 
+            initial="hidden" 
+            animate="visible" 
+            variants={baseFade}
+            transition={{ delay: 0.3 }}
+            className="flex justify-center items-center gap-6 md:gap-8 text-gray-500 tracking-wider mb-8 py-3.5 px-8 border-y border-white/5 bg-[#050505]/40 backdrop-blur-sm lg:border lg:border-white/5 lg:rounded-2xl lg:py-6 lg:px-8 lg:bg-[#050505]/60 lg:shadow-xl lg:w-full lg:max-w-sm"
+          >
+            <AnimatedUnit value={timeLeft.days} label="days" />
+            <span className="text-gray-800 select-none self-start mt-1">•</span>
+            <AnimatedUnit value={timeLeft.hours} label="hours" />
+            <span className="text-gray-800 select-none self-start mt-1">•</span>
+            <AnimatedUnit value={timeLeft.minutes} label="mins" />
+            <span className="text-gray-800 select-none self-start mt-1">•</span>
+            <AnimatedUnit value={timeLeft.seconds} label="secs" />
+          </motion.div>
+
+          {/* Video Mute/Unmute Control (Above Video) */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={baseFade}
+            transition={{ delay: 0.32 }}
+            className="w-full max-w-sm flex justify-end mb-2.5"
+          >
+            <button
+              type="button"
+              onClick={toggleMute}
+              className="flex items-center gap-1.5 text-[10px] font-mono tracking-wider text-gray-500 hover:text-[#F3A92C] transition-colors select-none uppercase"
             >
-              <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-              <span>{errorMessage}</span>
-            </motion.div>
-          )}
-        </motion.div>
+              {isMuted ? (
+                <>
+                  <VolumeX className="w-3.5 h-3.5" />
+                  <span>Unmute Video</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-3.5 h-3.5 text-[#F3A92C]" />
+                  <span>Mute Video</span>
+                </>
+              )}
+            </button>
+          </motion.div>
 
-        {/* Minimalist row of tags */}
-        <motion.div 
-          initial="hidden" 
-          animate="visible" 
-          variants={baseFade}
-          transition={{ delay: 0.5 }}
-          className="flex justify-center items-center gap-4 text-[10px] md:text-xs uppercase tracking-[0.2em] text-gray-600 font-light font-sans select-none"
-        >
-          <span>Signals</span>
-          <span className="text-gray-800">•</span>
-          <span>Mentorship</span>
-          <span className="text-gray-800">•</span>
-          <span>Community</span>
-        </motion.div>
+          {/* Video Preview Container */}
+          <motion.div 
+            initial="hidden" 
+            animate="visible" 
+            variants={baseFade}
+            transition={{ delay: 0.35 }}
+            className="w-full max-w-sm aspect-video rounded-xl border border-white/5 bg-white/[0.01] overflow-hidden mb-12 lg:mb-0 shadow-2xl relative"
+          >
+            <video 
+              ref={videoRef}
+              src="/promo.mp4" 
+              controls 
+              autoPlay 
+              loop 
+              muted={isMuted}
+              playsInline
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+        </div>
 
       </main>
 
